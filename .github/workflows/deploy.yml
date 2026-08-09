@@ -25,18 +25,29 @@ jobs:
 
           ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
 
-      - name: Add DigitalOcean host to known_hosts
-        env:
-          DO_HOST: ${{ secrets.DO_HOST }}
+      - name: Add DigitalOcean host
         run: |
-          ssh-keyscan -H "$DO_HOST" >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          ssh-keyscan -H "${{ secrets.DO_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Test SSH
+        run: |
+          ssh \
+            -i "$HOME/.ssh/deploy_key" \
+            -o IdentitiesOnly=yes \
+            "${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}" \
+            "echo 'SSH connection successful' && ls -ld /var/www"
 
       - name: Deploy to DigitalOcean
+        env:
+          DO_HOST: ${{ secrets.DO_HOST }}
+          DO_USER: ${{ secrets.DO_USER }}
         run: |
-          rsync -avz --delete \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            -e "ssh -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes" \
-            ./ \
-            "${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:/var/www/"
+          tar \
+            --exclude='.git' \
+            --exclude='.github' \
+            -czf - . | \
+          ssh \
+            -i "$HOME/.ssh/deploy_key" \
+            -o IdentitiesOnly=yes \
+            "${DO_USER}@${DO_HOST}" \
+            "tar -xzf - -C /var/www/"
