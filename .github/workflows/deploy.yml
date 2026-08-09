@@ -33,13 +33,10 @@ jobs:
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy to DigitalOcean
-        env:
-          DO_HOST: ${{ secrets.DO_HOST }}
-          DO_USER: ${{ secrets.DO_USER }}
         run: |
           rsync -avz --delete \
             --exclude='.git/' \
             --exclude='.github/' \
-            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
+            -e "ssh -i $HOME/.ssh/deploy_key -o IdentitiesOnly=yes" \
             ./ \
-            "${DO_USER}@${DO_HOST}:/var/www/"
+            "${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:/var/www/"
