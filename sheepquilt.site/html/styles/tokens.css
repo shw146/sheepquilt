@@ -1,0 +1,9 @@
+:root{
+    --load-color: rgb(204, 204, 204);
+    --header-background: url('/assets/header-background.webp');
+    --important-text-color: rgb(255, 187, 0);
+
+    --nav-background:#99d7ff;
+
+    --text-color: black;
+}

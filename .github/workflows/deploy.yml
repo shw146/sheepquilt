@@ -1,0 +1,25 @@
+name: Deploy Vanilla Frontend to DigitalOcean
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to DigitalOcean Droplet via SSH Rsync
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets::DO_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets::DO_HOST }}
+          REMOTE_USER: ${{ secrets::DO_USER }}
+          # TARGET is the folder path where Nginx/Apache serves your files
+          TARGET: "/var/www/"
+          # EXCLUDE removes git history and development files from syncing to production
+          EXCLUDE: "/.git/, /.github/"
