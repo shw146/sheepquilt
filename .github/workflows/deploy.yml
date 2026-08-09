@@ -28,6 +28,14 @@ jobs:
       - name: Add DigitalOcean host
         run: |
           ssh-keyscan -H "${{ secrets.DO_HOST }}" >> ~/.ssh/known_hosts
+      
+      - name: Show SSH key fingerprint
+        run: |
+          echo "Private key fingerprint:"
+          ssh-keygen -lf "$HOME/.ssh/deploy_key"
+
+          echo "Public key fingerprint:"
+          ssh-keygen -y -f "$HOME/.ssh/deploy_key" | ssh-keygen -lf -
 
       - name: Test SSH
         run: |
