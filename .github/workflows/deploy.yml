@@ -41,4 +41,5 @@ jobs:
             --exclude='.git/' \
             --exclude='.github/' \
             -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
-            ./ "$DO_USER@$DO_HOST:/var/www/"
+            ./ \
+            "${DO_USER}@${DO_HOST}:/var/www/"
