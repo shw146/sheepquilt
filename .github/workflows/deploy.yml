@@ -13,13 +13,32 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy to DigitalOcean Droplet via SSH Rsync
-        uses: easingthemes/ssh-deploy@v5.1.0
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.DO_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.DO_HOST }}
-          REMOTE_USER: ${{ secrets.DO_USER }}
-          # TARGET is the folder path where Nginx/Apache serves your files
-          TARGET: "/var/www/"
-          # EXCLUDE removes git history and development files from syncing to production
-          EXCLUDE: "/.git/, /.github/"
+      - name: Setup SSH
+        env:
+          DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$DO_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
+
+      - name: Add DigitalOcean host to known_hosts
+        env:
+          DO_HOST: ${{ secrets.DO_HOST }}
+        run: |
+          ssh-keyscan -H "$DO_HOST" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to DigitalOcean
+        env:
+          DO_HOST: ${{ secrets.DO_HOST }}
+          DO_USER: ${{ secrets.DO_USER }}
+        run: |
+          rsync -avz --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            -e "ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes" \
+            ./ "$DO_USER@$DO_HOST:/var/www/"
