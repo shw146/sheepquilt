@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Echo Form</title>
+    <link rel = "stylesheet" href = "/styles/tokens.css"/>
+    <link rel = "stylesheet" href = "/styles/global.css"/>
+    <link rel = "stylesheet" href = "/styles/echo-layout.css"/>
+    <link rel = "icon" type = "image/x-icon" href = "/assets/favicon.ico"/>
+    <script src="/scripts/send-request.js" defer></script>
+</head>
+<body>
+    <header>
+        <section>
+            <h1>Sheep Quilt</h1>
+            <p>A Patchwork Site</p>
+        </section>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/members/shawn.html">Shawn</a></li>
+            <li><a href="/CSE135.html">CSE135</a></li>
+        </ul>
+    </nav>
+    <main>
+        <form id="request-input">
+            <label for="endpoint">Choose a language: <select id="endpoint">
+                <option value="/scripts/echo-php.php">PHP</option>
+            </select></label>
+            <label for="method">Choose a method: <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select></label>
+            <label for="encoding">Choose an encoding type: <select id="encoding">
+                <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                <option value="application/json">application/json</option>
+            </select></label>
+            <input type="submit"></input>
+        </form>
+    </main>
+    <hr>
+    <footer>
+        <p>Made with patches, stitches, and love. Shawn Wang</p>
+    </footer>
+</body>
+</html>
