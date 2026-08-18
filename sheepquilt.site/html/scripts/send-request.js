@@ -34,11 +34,11 @@ async function sendHTTPRequest(event) {
             body: body
         });
 
-        const response = await response.text();
+        const html = await response.text();
 
         // Replace the current page with PHP's response
         document.open();
-        document.write(response);
+        document.write(html);
         document.close();
 
     } catch (error) {
