@@ -25,7 +25,7 @@
         </ul>
     </nav>
     <main>
-        <form id="request-input">
+        <form id="request-input" action="echo-php.php" method="GET">
             <label for="endpoint">Choose a language: <select id="endpoint">
                 <option value="/scripts/echo-php.php">PHP</option>
             </select></label>
@@ -39,6 +39,8 @@
                 <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
                 <option value="application/json">application/json</option>
             </select></label>
+            <label for="message">Send a message: </label>
+            <input type="text" id="message">
             <input type="submit"></input>
         </form>
     </main>

@@ -8,23 +8,25 @@ async function sendHTTPRequest(event) {
     const endpoint = document.getElementById("endpoint").value;
     const method = document.getElementById("method").value;
     const encoding = document.getElementById("encoding").value;
+    let body = null;
 
     const formData = new FormData(form);
 
-    let url = endpoint;
-    let body = null;
-
-    if (method === "GET") {
-        const params = new URLSearchParams(formData);
-        url += "?" + params.toString();
-    } else if (encoding === "application/json") {
-        body = JSON.stringify(Object.fromEntries(formData));
-    } else {
+    if(method === "GET"){
+        const parameters = new URLSearchParams(formData);
+        endpoint += "?"+params.toString();
+    }else if(encoding === "application/json"){
+        var temp = {};
+        formData.forEach(function(value, key){
+            temp[key] = value;
+        });
+        body = JSON.stringify(temp);
+    }else{
         body = new URLSearchParams(formData);
     }
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(endpoint, {
             method: method,
             headers: {
                 "Content-Type": encoding
@@ -32,11 +34,11 @@ async function sendHTTPRequest(event) {
             body: body
         });
 
-        const html = await response.text();
+        const response = await response.text();
 
         // Replace the current page with PHP's response
         document.open();
-        document.write(html);
+        document.write(response);
         document.close();
 
     } catch (error) {
