@@ -26,7 +26,7 @@ async function sendHTTPRequest(event) {
     }
 
     try {
-        const response = await fetch(endpoint, {
+        const request = await fetch(endpoint, {
             method: method,
             headers: {
                 "Content-Type": encoding
