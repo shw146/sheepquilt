@@ -1,6 +1,6 @@
 <?php
 $hostname = $_SERVER['SERVER_NAME'];
-$time = $_SERVER['REQUEST_TIME'];
+$time = date("Y-m-d H:i:s", $_SERVER['REQUEST_TIME']);
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
 $ip = $_SERVER['REMOTE_ADDR'];
 $data = file_get_contents("php://input");
