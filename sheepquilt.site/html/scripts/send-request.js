@@ -14,7 +14,7 @@ async function sendHTTPRequest(event) {
 
     if(method === "GET"){
         const parameters = new URLSearchParams(formData);
-        endpoint += "?"+params.toString();
+        endpoint += "?"+parameters.toString();
     }else if(encoding === "application/json"){
         var temp = {};
         formData.forEach(function(value, key){
