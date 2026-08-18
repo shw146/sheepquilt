@@ -5,7 +5,7 @@ form.addEventListener('submit', sendHTTPRequest);
 async function sendHTTPRequest(event) {
     event.preventDefault();
 
-    const endpoint = document.getElementById("endpoint").value;
+    let endpoint = document.getElementById("endpoint").value;
     const method = document.getElementById("method").value;
     const encoding = document.getElementById("encoding").value;
     let body = null;
