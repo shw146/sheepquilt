@@ -1,7 +1,13 @@
 <?php
 session_start();
 
-$_SESSION["name"]=$_POST['name'];
+if (isset($_POST["name"])) {
+    $_SESSION["name"] = $_POST["name"];
+}
+
+if (!isset($_SESSION["name"])) {
+    echo "No name in session.";
+}
 
 echo "<h1>State Check</h1>";
 echo "<p>The name you inputted is: ".htmlspecialchars($_SESSION["name"])."</p>";
