@@ -10,7 +10,7 @@ if (isset($_SESSION["name"])) {
 } else {
     echo "No session data found.";
     echo "<a href='/scripts/php/state1-php.php'>session page 1</a>";
-    echo "<form action=/scripts/php/destroy-session.php' method='get'>";
+    echo "<form action=/scripts/php/destroy-session.php method='get'>";
     echo "<button type='submit'>Destroy Session</button>";
 }
 ?>
