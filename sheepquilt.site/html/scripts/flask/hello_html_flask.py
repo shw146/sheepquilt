@@ -1,10 +1,9 @@
 from datetime import datetime
 from flask import request
 
-formatted_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-client_ip = request.remote_addr
-
 def get_html():
+    formatted_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    client_ip = request.remote_addr
     return f"""
 <!DOCTYPE html>
 <html lang = 'en'>
