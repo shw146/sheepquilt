@@ -13,13 +13,13 @@ def destroy_cookie():
         <h1>Cookie Destroyed</h1>
         <p>The cookie has been deleted.</p>
 
-        <a href="/flask/state1_flask.py">
+        <a href="/flask/state1_flask">
             Go to State 1
         </a>
-        <a href="/flask/state2_flask.py">
+        <a href="/flask/state2_flask">
             Go to State 2
         </a>
-        <a href="/sessioning.html">
+        <a href="/scripts/flask/sessioning.html">
             Go back to Sessioning
         </a>
     </body>
