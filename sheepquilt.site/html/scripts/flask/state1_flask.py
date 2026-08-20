@@ -17,10 +17,10 @@ def state1():
             <h1>Cookie Found</h1>
             <p>Your cookie contains: {cookie_value}</p>
 
-            <a href="/state2_flask">
+            <a href="/flask/state2_flask">
                 Go to State 2
             </a>
-            <a href="/destroy_cookie_flask">
+            <a href="/flask/destroy_cookie_flask">
                 Destroy Cookie
             </a>
         </body>
@@ -40,10 +40,10 @@ def state1():
         <h1>New Cookie Created</h1>
         <p>Your name is: {name}</p>
 
-        <a href="/state2_flask">
+        <a href="/flask/state2_flask">
             Go to State 2
         </a>
-        <a href="/destroy_cookie_flask">
+        <a href="/flask/destroy_cookie_flask">
             Destroy Cookie
         </a>
     </body>
