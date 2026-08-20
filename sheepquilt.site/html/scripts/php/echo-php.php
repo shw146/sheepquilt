@@ -11,18 +11,13 @@ $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
 if ($method === "GET") {
 
     // GET data is stored in $_GET
-    $data = $_GET;
+    foreach ($_GET as $key => $value) {
+    $data .= "<p>$key: $value</p>";
+    }
 
 } else {
 
-    // POST/PUT/etc. request body
-    $rawData = file_get_contents("php://input");
-
-    if (str_contains($contentType, "application/json")) {
-        $data = json_decode($rawData, true);
-    } else {
-        $data = $rawData;
-    }
+    $data = $_POST;
 }
 
 echo "<h1>PHP Echo Results</h1>";
@@ -36,11 +31,7 @@ echo "<strong>IP: </strong>" . htmlspecialchars($ip) . "<br>";
 
 echo "<strong>Data: </strong>";
 
-if (is_array($data)) {
-    echo htmlspecialchars(json_encode($data));
-} else {
-    echo htmlspecialchars($data);
-}
+echo $data
 
 echo "<br>";
 
