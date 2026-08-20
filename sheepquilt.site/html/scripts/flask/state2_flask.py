@@ -16,10 +16,10 @@ def state2():
             <h1>State 2</h1>
             <p>The cookie contains: {cookie_value}</p>
 
-            <a href="/flask/state1_flask">
+            <a href="/state1_flask">
                 Go to State 1
             </a>
-            <a href="/flask/destroy_cookie_flask">
+            <a href="/destroy_cookie_flask">
                 Destroy Cookie
             </a>
         </body>
@@ -36,10 +36,10 @@ def state2():
         <h1>State 2</h1>
         <p>No cookie has been set.</p>
 
-        <a href="/flask/state1_flask">
+        <a href="/state1_flask">
                     Go to State 1
         </a>
-        <a href="/flask/destroy_cookie_flask">
+        <a href="/destroy_cookie_flask">
             Destroy Cookie
         </a>
     </body>

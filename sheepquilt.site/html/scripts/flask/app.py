@@ -29,16 +29,16 @@ def environment_flask():
 def echo_flask():
     return get_echo_html()
 
-@app.route("/flask/state1_flask", methods=["POST"])
+@app.route("/state1_flask", methods=["POST"])
 def state1_route():
     return state1()
 
 
-@app.route("/flask/state2_flask", methods=["GET"])
+@app.route("/state2_flask", methods=["GET"])
 def state2_route():
     return state2()
 
 
-@app.route("/flask/destroy_cookie_flask", methods=["GET"])
+@app.route("/destroy_cookie_flask", methods=["GET"])
 def destroy_cookie_route():
     return destroy_cookie()
