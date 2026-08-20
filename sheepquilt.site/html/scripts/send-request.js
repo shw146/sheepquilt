@@ -12,16 +12,10 @@ async function sendHTTPRequest(event) {
 
     const formData = new FormData(form);
 
-    if(method === "GET"){
-        const parameters = new URLSearchParams(formData);
-        endpoint += "?"+parameters.toString();
-    }else if(encoding === "application/json"){
-        var temp = {};
-        formData.forEach(function(value, key){
-            temp[key] = value;
-        });
-        body = JSON.stringify(temp);
-    }else{
+    if (method === "GET") {
+    const parameters = new URLSearchParams(formData);
+    endpoint += "?" + parameters.toString();
+    } else {
         body = new URLSearchParams(formData);
     }
 
@@ -29,14 +23,13 @@ async function sendHTTPRequest(event) {
         const response = await fetch(endpoint, {
             method: method,
             headers: {
-                "Content-Type": encoding
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             body: body
         });
 
         const html = await response.text();
 
-        // Replace the current page with PHP's response
         document.open();
         document.write(html);
         document.close();
