@@ -31,7 +31,7 @@ echo "<strong>IP: </strong>" . htmlspecialchars($ip) . "<br>";
 
 echo "<strong>Data: </strong>";
 
-echo $data
+echo $data;
 
 echo "<br>";
 
