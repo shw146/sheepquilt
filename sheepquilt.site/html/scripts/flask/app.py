@@ -29,7 +29,7 @@ def environment_flask():
 def echo_flask():
     return get_echo_html()
 
-@app.route("/state1_flask", methods=["POST"])
+@app.route("/state1_flask", methods=["GET", "POST"])
 def state1_route():
     return state1()
 
