@@ -38,6 +38,72 @@
         </ul>
     </nav>
     <main>
+        <noscript>
+            <p> 
+                Hey! It looks like your browser isn't using javascript, so instead here are some forms that should send hard coded stuff over to different endpoints!
+            </p>
+            <h2>PHP endpoint with get</h2>
+            <form id="request-input" action="/scripts/php/echo-php.php" method="GET">
+                <label for="encoding">Choose an encoding type: <select id="encoding">
+                    <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                    <option value="application/json">application/json</option>
+                </select></label>
+                <label for="message">Send a message: </label>
+                <input type="text" id="message" name = "message">
+                <input type="submit"></input>
+            </form>
+            <h2>NodeJS endpoint with get</h2>
+            <form id="request-input" action="/scripts/nodejs/echo-nodejs" method="GET">
+                <label for="encoding">Choose an encoding type: <select id="encoding">
+                    <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                    <option value="application/json">application/json</option>
+                </select></label>
+                <label for="message">Send a message: </label>
+                <input type="text" id="message" name = "message">
+                <input type="submit"></input>
+            </form>
+            <h2>Flask endpoint with get</h2>
+            <form id="request-input" action="/flask/echo-flask" method="GET">
+                <label for="encoding">Choose an encoding type: <select id="encoding">
+                    <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                    <option value="application/json">application/json</option>
+                </select></label>
+                <label for="message">Send a message: </label>
+                <input type="text" id="message" name = "message">
+                <input type="submit"></input>
+            </form>
+            <h2>PHP endpoint with post</h2>
+            <form id="request-input" action="/scripts/php/echo-php.php" method="POST">
+                <label for="encoding">Choose an encoding type: <select id="encoding">
+                    <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                    <option value="application/json">application/json</option>
+                </select></label>
+                <label for="message">Send a message: </label>
+                <input type="text" id="message" name = "message">
+                <input type="submit"></input>
+            </form>
+            <h2>NodeJS endpoint with post</h2>
+            <form id="request-input" action="/scripts/nodejs/echo-nodejs" method="POST">
+                <label for="encoding">Choose an encoding type: <select id="encoding">
+                    <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                    <option value="application/json">application/json</option>
+                </select></label>
+                <label for="message">Send a message: </label>
+                <input type="text" id="message" name = "message">
+                <input type="submit"></input>
+            </form>
+            <h2>Flask endpoint with post</h2>
+            <form id="request-input" action="/flask/echo-flask" method="POST">
+                <label for="encoding">Choose an encoding type: <select id="encoding">
+                    <option value="x-www-form-urlencoded">x-www-form-urlencoded</option>
+                    <option value="application/json">application/json</option>
+                </select></label>
+                <label for="message">Send a message: </label>
+                <input type="text" id="message" name = "message">
+                <input type="submit"></input>
+            </form>
+        </noscript>
+        <h2>Javascript based form</h2>
         <form id="request-input">
             <label for="endpoint">Choose a language: <select id="endpoint">
                 <option value="/scripts/php/echo-php.php">PHP</option>
