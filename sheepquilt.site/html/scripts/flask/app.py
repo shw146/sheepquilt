@@ -3,6 +3,9 @@ from hello_html_flask import get_html
 from hello_json_flask import get_json
 from environment_flask import get_html as get_environment_html
 from echo_flask import get_html as get_echo_html
+from state1_flask import state1
+from state2_flask import state2
+from destroy_cookie_flask import destroy_cookie
 
 app = Flask(__name__)
 
@@ -25,3 +28,17 @@ def environment_flask():
 @app.route("/echo-flask", methods=["GET", "POST", "PUT", "DELETE"])
 def echo_flask():
     return get_echo_html()
+
+@app.route("/flask/state1_flask.py", methods=["POST"])
+def state1_route():
+    return state1()
+
+
+@app.route("/flask/state2_flask.py", methods=["GET"])
+def state2_route():
+    return state2()
+
+
+@app.route("/flask/destroy_cookie_flask.py", methods=["GET"])
+def destroy_cookie_route():
+    return destroy_cookie()
