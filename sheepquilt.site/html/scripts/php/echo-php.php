@@ -16,8 +16,9 @@ if ($method === "GET") {
     }
 
 } else {
-
-    $data = $_POST;
+    foreach ($_POST as $key => $value) {
+        $data .= "<p>" . htmlspecialchars($key) . ": " . htmlspecialchars($value) . "</p>";
+    }
 }
 
 echo "<h1>PHP Echo Results</h1>";
