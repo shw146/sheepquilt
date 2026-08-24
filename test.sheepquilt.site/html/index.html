@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang = "en">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Welcome to test.sheepquilt.site!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Contact form demonstration for Vanilla Starter.">
+    <title>Vanilla Starter | Contact</title><link rel="stylesheet" href="css/base.css">
+    <link id="theme-stylesheet" rel="stylesheet" href="css/themes/minimal.css">
+    <script src="js/site.js" defer></script>
 </head>
 <body>
-    <h1>Success! The test.sheepquilt.site virtual host is working!</h1>
+    <a class="skip-link" href="#main">Skip to content</a><header id="site-header"></header>
+    <main id="main" class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Say hello</p>
+            <h1>Contact</h1>
+            <p>This is a front-end-only form demonstrating reusable controls and JavaScript feedback.</p>
+        </header>
+        <section class="section narrow">
+            <form class="form-card" id="contact-form">
+                <label for="name">Name</label>
+                <input id="name" name="name" autocomplete="name" required>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="7" required></textarea>
+                <button class="button button-primary" type="submit">Send message</button>
+                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+    <footer id="site-footer"></footer>
 </body>
 </html>
