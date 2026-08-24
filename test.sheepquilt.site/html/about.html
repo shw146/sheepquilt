@@ -1,24 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page not found</title>
-    <link rel="stylesheet" href="css/base.css">
-    <link id="theme-stylesheet" rel="stylesheet" href="css/themes/minimal.css">
-    <script src="js/site.js" defer></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="How the Vanilla Starter separates structure, presentation, and behavior.">
+<title>Vanilla Starter | About</title>
+<link rel="stylesheet" href="css/base.css"><link id="theme-stylesheet" rel="stylesheet" href="css/themes/minimal.css"><script src="js/site.js" defer></script>
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <header id="site-header"></header>
-    <main id="main" class="page-shell">
-        <section class="hero compact">
-            <p class="eyebrow">404</p>
-            <h1>That page wandered off.</h1>
-            <p class="hero-text">The address you requested does not point to a page in this starter.</p>
-            <a class="button button-primary" href="index.html">Return home</a>
-        </section>
-    </main>
-    <footer id="site-footer"></footer>
-</body>
-</html>
+<a class="skip-link" href="#main">Skip to content</a><header id="site-header"></header>
+<main id="main" class="page-shell">
+<header class="page-header"><p class="eyebrow">Architecture</p><h1>Structure and presentation stay separate.</h1><p>HTML describes the content, base CSS provides the system, theme CSS provides the visual identity, and JavaScript provides small enhancements.</p></header>
+<section class="section"><div class="card-grid two-columns">
+<article class="card"><span class="icon">HTML</span><h2>Content layer</h2><p>Use semantic elements and simple component classes. The document should remain meaningful without CSS.</p></article>
+<article class="card"><span class="icon">CSS</span><h2>Presentation layer</h2><p>Base CSS owns layout and reusable components. Themes override variables and visual details.</p></article>
+<article class="card"><span class="icon">JS</span><h2>Behavior layer</h2><p>JavaScript handles navigation injection, theme persistence, mobile navigation, and the demo form.</p></article>
+<article class="card"><span class="icon">0 DEP</span><h2>No dependencies</h2><p>Everything runs directly in the browser. There are no imports, frameworks, or package dependencies.</p></article>
+</div></section>
+<section class="section"><article class="prose"><h2>Theme architecture</h2><p>Every page loads the shared base stylesheet first and one theme stylesheet second. The later stylesheet can customize the visual layer without replacing the system.</p><pre><code>&lt;link rel="stylesheet" href="css/base.css"&gt;
+&lt;link id="theme-stylesheet" rel="stylesheet" href="css/themes/minimal.css"&gt;</code></pre><p>Adding a fifth theme means adding a CSS file and one entry to the JavaScript theme map. Page markup does not need to change.</p></article></section>
+</main><footer id="site-footer"></footer>
+</body></html>

@@ -1,34 +1,34 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Contact form demonstration for Vanilla Starter.">
-    <title>Vanilla Starter | Contact</title><link rel="stylesheet" href="css/base.css">
-    <link id="theme-stylesheet" rel="stylesheet" href="css/themes/minimal.css">
-    <script src="js/site.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A dependency-free vanilla HTML, CSS, and JavaScript starter site.">
+<title>Vanilla Starter | Home</title>
+<link rel="stylesheet" href="css/base.css">
+<link id="theme-stylesheet" rel="stylesheet" href="css/themes/minimal.css">
+<script src="js/site.js" defer></script>
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to content</a><header id="site-header"></header>
-    <main id="main" class="page-shell">
-        <header class="page-header">
-            <p class="eyebrow">Say hello</p>
-            <h1>Contact</h1>
-            <p>This is a front-end-only form demonstrating reusable controls and JavaScript feedback.</p>
-        </header>
-        <section class="section narrow">
-            <form class="form-card" id="contact-form">
-                <label for="name">Name</label>
-                <input id="name" name="name" autocomplete="name" required>
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" autocomplete="email" required>
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="7" required></textarea>
-                <button class="button button-primary" type="submit">Send message</button>
-                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-            </form>
-        </section>
-    </main>
-    <footer id="site-footer"></footer>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header"></header>
+<main id="main" class="page-shell">
+<section class="hero">
+<p class="eyebrow">Vanilla HTML / CSS / JS</p>
+<h1>One structure. Four personalities.</h1>
+<p class="hero-text">A small dependency-free site where the HTML stays the same while shared CSS and interchangeable themes control presentation.</p>
+<nav class="cluster" aria-label="Home page links"><a class="button button-primary" href="projects.html">Explore projects</a><a class="button button-secondary" href="about.html">How it works</a></nav>
+</section>
+<section class="section">
+<header class="section-heading"><div><p class="eyebrow">The system</p><h2>Reusable components</h2></div><p>The same cards, buttons, navigation, forms, and layout primitives work in every theme.</p></header>
+<div class="card-grid">
+<article class="card"><span class="icon">01</span><h3>Semantic HTML</h3><p>Content uses ordinary headings, sections, articles, navigation, links, and forms.</p></article>
+<article class="card"><span class="icon">02</span><h3>Shared CSS</h3><p>Base CSS handles structure, responsive behavior, spacing, and reusable components.</p></article>
+<article class="card"><span class="icon">03</span><h3>Theme CSS</h3><p>Each theme changes visual tokens and selected details without changing the markup.</p></article>
+</div>
+</section>
+<section class="section split"><article><p class="eyebrow">No dependencies</p><h2>Small enough to understand.</h2><p>No framework, package manager, build system, or JavaScript imports. These are just browser-native files.</p></article><aside class="callout"><strong>Try the theme switcher.</strong><p>Your selected theme is stored in localStorage and restored on every page.</p></aside></section>
+</main>
+<footer id="site-footer"></footer>
 </body>
 </html>
