@@ -1,11 +1,10 @@
 <?php
 $host = "localhost";
-$user = "web_user";
-$pass = "your_secure_password";
-$db = "my_web_db";
+$user = "shawnwang";
+$db = "userTracking";
 
 // Open connection to PostgreSQL
-$conn = pg_connect("host=$host dbname=$db user=$user password=$pass");
+$conn = pg_connect("host=$host dbname=$db user=$user");
 
 if (!$conn) {
     echo "❌ Connection failed.";
