@@ -22,12 +22,24 @@ $title = $data["title"] ?? null;
 $referrer = $data["referrer"] ?? null;
 $timestamp = $data["timestamp"] ?? null;
 $type = $data["type"] ?? null;
-$staticInfo = $data["staticInfo"] ?? null;
-$performanceInfo = $data["performanceInfo"] ?? null;
-$error = $data["error"] ?? null;
-$mouseData = $data["mouseData"] ?? null;
-$keyPressed = $data["keyPressed"] ?? null;
-$idleInfo = $data["idleInfo"] ?? null;
+$staticInfo = isset($data["staticInfo"])
+    ? json_encode($data["staticInfo"])
+    : null;
+$performanceInfo = isset($data["performanceInfo"])
+    ? json_encode($data["performanceInfo"])
+    : null;
+$error = isset($data["error"])
+    ? json_encode($data["error"])
+    : null;
+$mouseData = isset($data["mouseData"])
+    ? json_encode($data["mouseData"])
+    : null;
+$keyPressed = isset($data["keyPressed"])
+    ? json_encode($data["keyPressed"])
+    : null;
+$idleInfo = isset($data["idleInfo"])
+    ? json_encode($data["idleInfo"])
+    : null;
 
 
 $query = "
