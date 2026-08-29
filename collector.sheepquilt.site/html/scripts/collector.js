@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    const endpoint = '/collect';
+    const endpoint = '/testdb.php';
 
     const MAX_ERRORS = 10;
     let errorCount = 0;
@@ -88,32 +88,18 @@
     
     
     // Aggregate all of the information, then send to endpoint
-    function collect(data) {
+    function collect() {
         let payload;
-        if(data == null){
-            payload = {
-                uuid: userId,
-                url: window.location.href,
-                title: document.title,
-                referrer: document.referrer,
-                timestamp: new Date().toISOString(),
-                type: 'pageview',
-                staticInfo: getStaticInfo(),
-                performanceInfo: getPerformanceInfo(),
-            };
-        }else{
-            payload = {
-                uuid: userId,
-                url: window.location.href,
-                title: document.title,
-                referrer: document.referrer,
-                timestamp: new Date().toISOString(),
-                type: 'pageview',
-                staticInfo: getStaticInfo(),
-                performanceInfo: getPerformanceInfo(),
-                data: data,
-            }
-        }
+        payload = {
+            uuid: userId,
+            url: window.location.href,
+            title: document.title,
+            referrer: document.referrer,
+            timestamp: new Date().toISOString(),
+            type: 'pageview',
+            staticInfo: getStaticInfo(),
+            performanceInfo: getPerformanceInfo(),
+        };
 
         // Log to console so you can see what would be sent
         console.log('Sending beacon:', payload);
@@ -211,17 +197,35 @@
 
         // Send error beacon
         const payload = {
-        type: 'error',
-        error: errorData,
-        timestamp: new Date().toISOString(),
-        url: window.location.href,
-        session: getSessionId()
+            uuid: userId,
+            url: window.location.href,
+            title: document.title,
+            referrer: document.referrer,
+            timestamp: new Date().toISOString(),
+            type: 'pageview',
+            staticInfo: getStaticInfo(),
+            performanceInfo: getPerformanceInfo(),
+            error: errorData
         };
 
-        collect(payload);
+        // Log to console so you can see what would be sent
+        console.log('Sending beacon:', payload);
 
-        // Dispatch custom event so test pages can display the error
-        window.dispatchEvent(new CustomEvent('collector:error', { detail: { errorData: errorData, count: errorCount } }));
+        const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
+
+        if (navigator.sendBeacon) {
+            const sent = navigator.sendBeacon(endpoint, blob);
+            console.log('sendBeacon returned:', sent);
+        } else {
+            console.log('sendBeacon not available, using fetch fallback');
+            fetch(endpoint, {
+                method: 'POST',
+                body: blob,
+                keepalive: true
+            }).catch((err) => {
+                console.log('fetch fallback error:', err.message);
+            });
+        }
     }
 
 
@@ -261,12 +265,37 @@
     }
 
     function reportMouse(mouseData){
+        // Send error beacon
         const payload = {
-        type: 'mouse',
-        data: mouseData
+            uuid: userId,
+            url: window.location.href,
+            title: document.title,
+            referrer: document.referrer,
+            timestamp: new Date().toISOString(),
+            type: 'pageview',
+            staticInfo: getStaticInfo(),
+            performanceInfo: getPerformanceInfo(),
+            mouseData: mouseData
         };
 
-        collect(payload);
+        // Log to console so you can see what would be sent
+        console.log('Sending beacon:', payload);
+
+        const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
+
+        if (navigator.sendBeacon) {
+            const sent = navigator.sendBeacon(endpoint, blob);
+            console.log('sendBeacon returned:', sent);
+        } else {
+            console.log('sendBeacon not available, using fetch fallback');
+            fetch(endpoint, {
+                method: 'POST',
+                body: blob,
+                keepalive: true
+            }).catch((err) => {
+                console.log('fetch fallback error:', err.message);
+            });
+        }
     }
 
     function initKeyboardTracking(){
@@ -278,10 +307,37 @@
     }
 
     function reportKeyboard(keyboardData){
+        // Send error beacon
         const payload = {
+            uuid: userId,
+            url: window.location.href,
+            title: document.title,
+            referrer: document.referrer,
+            timestamp: new Date().toISOString(),
+            type: 'pageview',
+            staticInfo: getStaticInfo(),
+            performanceInfo: getPerformanceInfo(),
             keyPressed: keyboardData
         };
-        collect(payload);
+
+        // Log to console so you can see what would be sent
+        console.log('Sending beacon:', payload);
+
+        const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
+
+        if (navigator.sendBeacon) {
+            const sent = navigator.sendBeacon(endpoint, blob);
+            console.log('sendBeacon returned:', sent);
+        } else {
+            console.log('sendBeacon not available, using fetch fallback');
+            fetch(endpoint, {
+                method: 'POST',
+                body: blob,
+                keepalive: true
+            }).catch((err) => {
+                console.log('fetch fallback error:', err.message);
+            });
+        }
     }
 
 
@@ -340,6 +396,36 @@
     }, 1000);
 
     function reportIdle(idleData){
-        collect(idleData);
+        // Send error beacon
+        const payload = {
+            uuid: userId,
+            url: window.location.href,
+            title: document.title,
+            referrer: document.referrer,
+            timestamp: new Date().toISOString(),
+            type: 'pageview',
+            staticInfo: getStaticInfo(),
+            performanceInfo: getPerformanceInfo(),
+            idleInfo: idleData
+        };
+
+        // Log to console so you can see what would be sent
+        console.log('Sending beacon:', payload);
+
+        const blob = new Blob([JSON.stringify(payload)], {type: 'application/json'});
+
+        if (navigator.sendBeacon) {
+            const sent = navigator.sendBeacon(endpoint, blob);
+            console.log('sendBeacon returned:', sent);
+        } else {
+            console.log('sendBeacon not available, using fetch fallback');
+            fetch(endpoint, {
+                method: 'POST',
+                body: blob,
+                keepalive: true
+            }).catch((err) => {
+                console.log('fetch fallback error:', err.message);
+            });
+        }
     }
 })();
