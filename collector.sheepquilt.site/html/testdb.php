@@ -6,7 +6,6 @@ $password = "123456789";
 
 // Open connection to PostgreSQL
 $conn = pg_connect("host=$host dbname=$db user=$user password=$password");
-echo pg_last_error($conn);
 
 if (!$conn) {
     http_response_code(500);
@@ -65,7 +64,7 @@ $result = pg_query_params($conn, $query, [
 
 if ($result === false) {
     http_response_code(500);
-    echo "Database insert failed";
+    echo "Database insert failed:". pg_last_error($conn);
     exit;
 }
 
