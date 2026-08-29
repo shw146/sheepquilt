@@ -6,6 +6,7 @@ $password = "123456789";
 
 // Open connection to PostgreSQL
 $conn = pg_connect("host=$host dbname=$db user=$user password=$password");
+pg_last_error($conn);
 
 if (!$conn) {
     http_response_code(500);
