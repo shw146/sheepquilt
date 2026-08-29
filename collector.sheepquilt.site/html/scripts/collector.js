@@ -51,7 +51,7 @@
         test.remove();
         return{
             currentPage: window.location.href,
-            currentTime: now,
+            currentTime: new Date().toLocaleTimeString(),
             ua: navigator.userAgent,
             language: navigator.language,
             screenWidth: window.screen.width,
