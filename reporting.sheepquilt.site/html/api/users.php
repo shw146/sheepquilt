@@ -84,7 +84,7 @@
         $stmt->execute([
             ":username" => $username,
             ":password" => $password,
-            ":permission_level" => $permission
+            ":permission" => $permission
         ]);
     }
 
