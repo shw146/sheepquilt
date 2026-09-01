@@ -24,7 +24,7 @@
         $password
     );
 
-    $stmt = $pdo->query("SELECT username, password, permission FROM users");
+    $stmt = $pdo->query("SELECT username, password, permission FROM logininfo");
 
     while($row = $stmt -> fetch(PDO::FETCH_ASSOC)){
         echo "<p> username: ".htmlspecialchars($row['username'])."</p>";
