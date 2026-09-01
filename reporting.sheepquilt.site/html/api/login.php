@@ -5,7 +5,7 @@
     $password = $_POST["password"];
 
     $host = 'localhost';
-    $dbname = 'logininfo';
+    $dbname = 'usertracking';
     $dbuser = 'shawnwang';
     $dbpass = '123456789';
 
