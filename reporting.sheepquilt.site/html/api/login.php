@@ -4,8 +4,8 @@
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    echo $username;
-    echo $password;
+    echo "<p>".$username."</p>";
+    echo "<p>".$password."</p>";
 
     $host = 'localhost';
     $dbname = 'usertracking';
