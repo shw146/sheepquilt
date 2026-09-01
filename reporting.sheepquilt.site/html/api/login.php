@@ -40,10 +40,10 @@
 
         // Check permission level
         if ($user['permission'] === 'admin') {
-            header("Location: /api/admin.php");
+            header("Location: /api/users.php");
             exit; 
         } elseif ($user['permission'] === 'user') {
-            header("Location: /api/user.php");
+            header("Location: /api/standard.php");
             exit; 
         }
     } else {
