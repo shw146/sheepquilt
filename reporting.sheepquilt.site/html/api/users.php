@@ -26,9 +26,18 @@
 
     $stmt = $pdo->query("SELECT username, password, permission FROM logininfo");
 
+    echo "<table>";
+    echo "<tr>";
+    echo "<th>Username</th>";
+    echo "<th>Password</th>";
+    echo "<th>Permissions</th>";
+    echo "</tr>";
+
     while($row = $stmt -> fetch(PDO::FETCH_ASSOC)){
-        echo "<p> username: ".htmlspecialchars($row['username'])."</p>";
-        echo "<p> username: ".htmlspecialchars($row['password'])."</p>";
-        echo "<p> permission: ".htmlspecialchars($row['permission'])."</p>";
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($row["username"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["password"]) . "</td>";
+        echo "<td>" . htmlspecialchars($row["permission"]) . "</td>";
+        echo "</tr>";
     }
 ?>
