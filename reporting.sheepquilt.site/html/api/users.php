@@ -20,14 +20,13 @@
 
     $pdo = new PDO(
         "pgsql:host=$host;dbname=$dbname",
-        $username,
-        $password
+        $dbuser,
+        $dbpass
     );
 
     $stmt = $pdo->query("SELECT username, password, permission FROM logininfo");
 
     while($row = $stmt -> fetch(PDO::FETCH_ASSOC)){
-        print_r($row);
         echo "<p> username: ".htmlspecialchars($row['username'])."</p>";
         echo "<p> username: ".htmlspecialchars($row['password'])."</p>";
         echo "<p> permission: ".htmlspecialchars($row['permission'])."</p>";
