@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    const endpoint = '/testdb.php';
+    const endpoint = 'https://collector.sheepquilt.site/testdb.php';
 
     const MAX_ERRORS = 10;
     let errorCount = 0;
