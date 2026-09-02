@@ -31,7 +31,7 @@
     // Get information about useragents and their timestamps
     $stmt = $pdo->query("
         SELECT timestamp, staticinfo
-        FROM mytable
+        FROM userinformation
         WHERE mousedata IS NULL OR mousedata = '' AND keypressed IS NULL OR keypressed = ''
         ORDER BY timestamp ASC
     ");
