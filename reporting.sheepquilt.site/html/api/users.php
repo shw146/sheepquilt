@@ -3,6 +3,7 @@
 <head>
     <meta charset = "utf-8">
     <title>Admin</title>
+    <script src = /scripts/delete-confirm.js defer>
 </head>
 
 <body>
@@ -58,7 +59,20 @@
             <input name = "newvalue">
         </label>
         <br>
-        <button type="submit">Create User</button>
+        <button type="submit">Update User</button>
+    </form>
+
+    <h2>Delete an existing user</h2>
+    <!--Form for updating-->
+    <form method="POST" action="/api/users.php" id = "delete-form">
+        <!-- Tells PHP what this POST request is for -->
+        <input type="hidden" name="action" value="delete">
+        <label>
+            Which user are you deleting?
+            <input name="username" required>
+        </label>
+        <br>
+        <button type="submit">Delete user</button>
     </form>
 
 </body>
@@ -124,6 +138,16 @@
         
         $stmt->execute([
             ":newvalue" => $newvalue,
+            ":username" => $username
+        ]);
+    }
+
+    //Delete a user's information
+    if($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "update"){
+        $username = $_POST["username"];
+
+        $stmt = $pdo->prepare("DELETE FROM logininfo WHERE username=:username");
+        $stmt->execute([
             ":username" => $username
         ]);
     }
