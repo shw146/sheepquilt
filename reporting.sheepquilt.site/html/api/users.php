@@ -143,7 +143,7 @@
     }
 
     //Delete a user's information
-    if($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "update"){
+    if($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "delete"){
         $username = $_POST["username"];
 
         $stmt = $pdo->prepare("DELETE FROM logininfo WHERE username=:username");
