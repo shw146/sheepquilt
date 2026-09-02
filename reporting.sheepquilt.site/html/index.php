@@ -141,26 +141,50 @@
     $sql = "
         SELECT
             CASE
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Edg/%' THEN 'Edge'
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%OPR/%' THEN 'Opera'
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Firefox/%' THEN 'Firefox'
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Chrome/%' THEN 'Chrome'
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Safari/%' THEN 'Safari'
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%bot%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%crawler%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%spider%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%slurp%'
+                    THEN 'Bot'
+
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Edg/%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%Edge/%'
+                    THEN 'Edge'
+
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%OPR/%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%Opera%'
+                    THEN 'Opera'
+
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Chrome/%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%CriOS/%'
+                    THEN 'Chrome'
+
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Firefox/%'
+                OR staticinfo::jsonb->>'ua' ILIKE '%FxiOS/%'
+                    THEN 'Firefox'
+
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Safari/%'
+                    THEN 'Safari'
+
                 ELSE 'Other'
             END AS browser,
+
             COUNT(*) AS error_count
+
         FROM userinformation
+
         WHERE error IS NOT NULL
         AND error <> ''
+
         GROUP BY browser
         ORDER BY error_count DESC
     ";
 
-    $result = pg_query($db, $sql);
+    $stmt = $pdo->query($sql);
 
     $chartData = [];
 
-    while ($row = pg_fetch_assoc($result)) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $chartData[] = [
             'browser' => $row['browser'],
             'count' => (int)$row['error_count']
