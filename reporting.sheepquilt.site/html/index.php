@@ -27,25 +27,115 @@
 
     $urldata = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // get information about useragents and timestamps
+    $sql = "
+    SELECT
+        date_trunc('hour', \"timestamp\"::timestamp) AS hour,
+        staticinfo::jsonb->>'ua' AS user_agent,
+        COUNT(*) AS requests
+    FROM userinformation
+    GROUP BY hour, user_agent
+    ORDER BY hour
+    ";
 
-    // Get information about useragents and their timestamps
-    $stmt = $pdo->query("
-        SELECT timestamp, staticinfo
-        FROM userinformation
-        WHERE mousedata IS NULL OR mousedata = '' AND keypressed IS NULL OR keypressed = ''
-        ORDER BY timestamp ASC
-    ");
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 
-    $chartData = [];
+    $rows = $stmt->fetchAll();
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $staticInfo = json_decode($row["staticinfo"], true);
 
-        $chartData[] = [
-            "timestamp" => $row["timestamp"],
-            "userAgent" => $staticInfo["ua"] ?? "Unknown"
-        ];
+    // Classify user agents
+
+    function classifyUserAgent($ua)
+    {
+        if (!$ua) {
+            return "Other";
+        }
+
+        $ua = strtolower($ua);
+
+        if (
+            strpos($ua, "bot") !== false ||
+            strpos($ua, "crawler") !== false ||
+            strpos($ua, "spider") !== false ||
+            strpos($ua, "slurp") !== false
+        ) {
+            return "Bot";
+        }
+
+        if (
+            strpos($ua, "edg/") !== false ||
+            strpos($ua, "edge/") !== false
+        ) {
+            return "Edge";
+        }
+
+        if (
+            strpos($ua, "opr/") !== false ||
+            strpos($ua, "opera") !== false
+        ) {
+            return "Opera";
+        }
+
+        if (
+            strpos($ua, "chrome/") !== false ||
+            strpos($ua, "crios/") !== false
+        ) {
+            return "Chrome";
+        }
+
+        if (
+            strpos($ua, "firefox/") !== false ||
+            strpos($ua, "fxios/") !== false
+        ) {
+            return "Firefox";
+        }
+
+        if (strpos($ua, "safari/") !== false) {
+            return "Safari";
+        }
+
+        return "Other";
     }
+
+
+    // Format the data for JavaScript
+
+    $analyticsData = [];
+
+    foreach ($rows as $row) {
+
+        $hour = $row["hour"];
+
+        $browser = classifyUserAgent($row["user_agent"]);
+
+        $requests = (int) $row["requests"];
+
+        if (!isset($analyticsData[$hour])) {
+            $analyticsData[$hour] = [
+                "Chrome" => 0,
+                "Safari" => 0,
+                "Firefox" => 0,
+                "Edge" => 0,
+                "Opera" => 0,
+                "Bot" => 0,
+                "Other" => 0
+            ];
+        }
+
+        $analyticsData[$hour][$browser] += $requests;
+    }
+
+    $analyticsData = array_map(
+        function ($hour, $browsers) {
+            return array_merge(
+                ["hour" => $hour],
+                $browsers
+            );
+        },
+        array_keys($analyticsData),
+        $analyticsData
+    );
 ?>
 
 <!DOCTYPE html>
@@ -60,9 +150,6 @@
     <link rel = "stylesheet" href = "/styles/home-layout.css"/>
     <link rel = "icon" type = "image/x-icon" href = "/assets/favicon.ico"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
 </head>
 
 <body>
@@ -89,13 +176,13 @@
         <script>
             const urlData = <?php echo json_encode($urldata); ?>;
 
-            const labels = urlData.map(item => item.url);
+            const pageLabels = urlData.map(item => item.url);
             const values = urlData.map(item => Number(item.user_count));
 
             new Chart(document.getElementById("pageChart"), {
                 type: "bar",
                 data: {
-                    labels: labels,
+                    labels: pageLabels,
                     datasets: [{
                         label: "Number of users accessing the page",
                         data: values
@@ -115,295 +202,137 @@
                 }
             });
         </script>
-        <canvas id="deviceHeatmap"></canvas>
+
+        <canvas id="userAgentChart"></canvas>
         <script>
-            const chartData = <?php echo json_encode($chartData); ?>;
+
+            // PHP inserts the database results directly into JavaScript.
+
+            const analyticsData =
+                <?= json_encode($analyticsData) ?>;
 
 
-            /*
-            * Determine the device from the user-agent string.
-            */
-            function getDevice(userAgent) {
-                if (/iPhone/i.test(userAgent)) {
-                    return "iPhone";
+            const analyticsLabels = analyticsData.map(row => {
+
+                const date = new Date(
+                    row.hour.replace(" ", "T")
+                );
+
+                return date.toLocaleString([], {
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric"
+                });
+
+            });
+
+
+            const datasets = [
+
+                {
+                    label: "Chrome",
+                    data: analyticsData.map(row => row.Chrome),
+                    tension: 0.2
+                },
+
+                {
+                    label: "Safari",
+                    data: analyticsData.map(row => row.Safari),
+                    tension: 0.2
+                },
+
+                {
+                    label: "Firefox",
+                    data: analyticsData.map(row => row.Firefox),
+                    tension: 0.2
+                },
+
+                {
+                    label: "Edge",
+                    data: analyticsData.map(row => row.Edge),
+                    tension: 0.2
+                },
+
+                {
+                    label: "Opera",
+                    data: analyticsData.map(row => row.Opera),
+                    tension: 0.2
+                },
+
+                {
+                    label: "Bot",
+                    data: analyticsData.map(row => row.Bot),
+                    tension: 0.2
+                },
+
+                {
+                    label: "Other",
+                    data: analyticsData.map(row => row.Other),
+                    tension: 0.2
                 }
 
-                if (/iPad/i.test(userAgent)) {
-                    return "iPad";
-                }
-
-                if (/Android/i.test(userAgent)) {
-                    return "Android";
-                }
-
-                if (/Windows/i.test(userAgent)) {
-                    return "Windows";
-                }
-
-                if (/Macintosh|Mac OS X/i.test(userAgent)) {
-                    return "Mac";
-                }
-
-                if (/Linux/i.test(userAgent)) {
-                    return "Linux";
-                }
-
-                return "Unknown";
-            }
-
-
-            /*
-            * The rows on the Y axis.
-            */
-            const devices = [
-                "Windows",
-                "Mac",
-                "iPhone",
-                "iPad",
-                "Android",
-                "Linux",
-                "Unknown"
             ];
 
 
-            /*
-            * Group requests into 10-minute buckets.
-            *
-            * Each database row represents ONE request.
-            * A request simply increments the count of its
-            * corresponding time/device cell.
-            */
-            const interval = 10 * 60 * 1000;
+            new Chart(
+                document.getElementById("userAgentChart"),
+                {
+                    type: "line",
 
-            const counts = {};
-
-
-            chartData.forEach(row => {
-                const timestamp = new Date(row.timestamp);
-                const device = getDevice(row.userAgent);
-
-                /*
-                * Round the timestamp down to the nearest
-                * 10-minute interval.
-                */
-                const bucketTimestamp = new Date(
-                    Math.floor(timestamp.getTime() / interval) * interval
-                );
-
-                /*
-                * Use a readable local-time string as the
-                * bucket identifier.
-                */
-                const bucket = bucketTimestamp.toLocaleString([], {
-                    dateStyle: "short",
-                    timeStyle: "short"
-                });
-
-
-                if (!counts[bucket]) {
-                    counts[bucket] = {};
-                }
-
-                if (!counts[bucket][device]) {
-                    counts[bucket][device] = 0;
-                }
-
-                counts[bucket][device]++;
-            });
-
-
-            /*
-            * Get all time buckets in chronological order.
-            */
-            const timeBuckets = Object.keys(counts);
-
-
-            /*
-            * Convert the grouped data into the format
-            * expected by chartjs-chart-matrix.
-            *
-            * v = number of requests in that cell.
-            */
-            const heatmapData = [];
-
-            timeBuckets.forEach(bucket => {
-                devices.forEach(device => {
-
-                    const requestCount =
-                        counts[bucket][device] || 0;
-
-                    heatmapData.push({
-                        x: bucket,
-                        y: device,
-                        v: requestCount
-                    });
-                });
-            });
-
-
-            /*
-            * Find the largest number of requests in
-            * any one cell.
-            *
-            * This is used to determine the heatmap intensity.
-            */
-            const maxValue = Math.max(
-                ...heatmapData.map(point => point.v),
-                1
-            );
-
-
-            /*
-            * Create the heatmap.
-            */
-            new Chart(document.getElementById("deviceHeatmap"), {
-                type: "matrix",
-
-                data: {
-                    datasets: [{
-                        label: "Requests",
-                        data: heatmapData,
-
-                        /*
-                        * Make cells darker when they contain
-                        * more requests.
-                        */
-                        backgroundColor: function(context) {
-                            const point =
-                                context.dataset.data[context.dataIndex];
-
-                            const value = point.v;
-
-                            if (value === 0) {
-                                return "rgba(0, 0, 0, 0.05)";
-                            }
-
-                            const intensity = value / maxValue;
-
-                            return `rgba(
-                                0,
-                                100,
-                                255,
-                                ${0.15 + intensity * 0.85}
-                            )`;
-                        },
-
-                        borderWidth: 1,
-                        borderColor: "white",
-
-                        /*
-                        * Width of each time cell.
-                        */
-                        width: function(context) {
-                            const chartArea = context.chart.chartArea;
-
-                            if (!chartArea) {
-                                return 20;
-                            }
-
-                            const numberOfBuckets =
-                                timeBuckets.length;
-
-                            return Math.max(
-                                5,
-                                chartArea.width / numberOfBuckets - 2
-                            );
-                        },
-
-                        /*
-                        * Height of each device cell.
-                        */
-                        height: function(context) {
-                            const chartArea = context.chart.chartArea;
-
-                            if (!chartArea) {
-                                return 20;
-                            }
-
-                            return Math.max(
-                                10,
-                                chartArea.height / devices.length - 2
-                            );
-                        }
-                    }]
-                },
-
-
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-
-
-                    plugins: {
-
-                        /*
-                        * The heatmap itself provides the visual
-                        * legend, so we don't need the dataset
-                        * legend.
-                        */
-                        legend: {
-                            display: false
-                        },
-
-
-                        /*
-                        * Show the exact request count when
-                        * hovering over a cell.
-                        */
-                        tooltip: {
-                            callbacks: {
-
-                                title: function(context) {
-                                    const point =
-                                        context[0].raw;
-
-                                    return point.x;
-                                },
-
-                                label: function(context) {
-                                    const point =
-                                        context.raw;
-
-                                    return `${point.y}: ${point.v} requests`;
-                                }
-                            }
-                        }
+                    data: {
+                        labels: analyticsLabels,
+                        datasets: datasets
                     },
 
+                    options: {
 
-                    scales: {
+                        responsive: true,
 
-                        /*
-                        * X axis = time buckets.
-                        */
-                        x: {
-                            type: "category",
-                            labels: timeBuckets,
+                        maintainAspectRatio: true,
 
-                            title: {
-                                display: true,
-                                text: "Time"
-                            }
+                        interaction: {
+                            mode: "index",
+                            intersect: false
                         },
 
+                        plugins: {
 
-                        /*
-                        * Y axis = device type.
-                        */
-                        y: {
-                            type: "category",
-                            labels: devices,
-
-                            offset: true,
-
-                            title: {
-                                display: true,
-                                text: "Device"
+                            legend: {
+                                position: "bottom"
                             }
+
+                        },
+
+                        scales: {
+
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: "Time"
+                                }
+                            },
+
+                            y: {
+
+                                beginAtZero: true,
+
+                                title: {
+                                    display: true,
+                                    text: "Requests"
+                                },
+
+                                ticks: {
+                                    precision: 0
+                                }
+
+                            }
+
                         }
+
                     }
                 }
-            });
+            );
+
         </script>
     </main>
     <hr>
