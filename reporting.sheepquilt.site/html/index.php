@@ -30,29 +30,10 @@
 
     // Get information about useragents and their timestamps
     $stmt = $pdo->query("
-        SELECT
-        date_trunc('hour', timestamp)
-            + floor(extract(minute FROM timestamp) / 10) * interval '10 minutes'
-            AS time_bucket,
-
-        CASE
-            WHEN staticinfo->>'ua' ILIKE '%iPhone%' THEN 'iPhone'
-            WHEN staticinfo->>'ua' ILIKE '%iPad%' THEN 'iPad'
-            WHEN staticinfo->>'ua' ILIKE '%Android%' THEN 'Android'
-            WHEN staticinfo->>'ua' ILIKE '%Windows%' THEN 'Windows'
-            WHEN staticinfo->>'ua' ILIKE '%Macintosh%'
-              OR staticinfo->>'ua' ILIKE '%Mac OS X%' THEN 'Mac'
-            WHEN staticinfo->>'ua' ILIKE '%Linux%' THEN 'Linux'
-            ELSE 'Unknown'
-        END AS device,
-
-        COUNT(DISTINCT uuid) AS user_count
-
-        FROM userinformation
-
-        GROUP BY time_bucket, device
-
-        ORDER BY time_bucket ASC
+        SELECT timestamp, staticinfo
+        FROM mytable
+        WHERE mousedata IS NULL OR mousedata = '' AND keypressed IS NULL OR keypressed = ''
+        ORDER BY timestamp ASC
     ");
 
     $chartData = [];
@@ -80,6 +61,8 @@
     <link rel = "icon" type = "image/x-icon" href = "/assets/favicon.ico"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
 </head>
 
 <body>
@@ -132,7 +115,6 @@
                 }
             });
         </script>
-
         <canvas id="deviceHeatmap"></canvas>
         <script>
             const chartData = <?php echo json_encode($chartData); ?>;
