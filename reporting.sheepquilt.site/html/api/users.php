@@ -150,6 +150,9 @@
         $stmt->execute([
             ":username" => $username
         ]);
+
+        echo "Username: [" . $username . "]<br>";
+        echo "Rows deleted: " . $stmt->rowCount();
     }
 
     //Query for info
