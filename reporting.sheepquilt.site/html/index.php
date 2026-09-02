@@ -30,9 +30,29 @@
 
     // Get information about useragents and their timestamps
     $stmt = $pdo->query("
-        SELECT timestamp, staticinfo
+        SELECT
+        date_trunc('hour', timestamp)
+            + floor(extract(minute FROM timestamp) / 10) * interval '10 minutes'
+            AS time_bucket,
+
+        CASE
+            WHEN staticinfo->>'ua' ILIKE '%iPhone%' THEN 'iPhone'
+            WHEN staticinfo->>'ua' ILIKE '%iPad%' THEN 'iPad'
+            WHEN staticinfo->>'ua' ILIKE '%Android%' THEN 'Android'
+            WHEN staticinfo->>'ua' ILIKE '%Windows%' THEN 'Windows'
+            WHEN staticinfo->>'ua' ILIKE '%Macintosh%'
+              OR staticinfo->>'ua' ILIKE '%Mac OS X%' THEN 'Mac'
+            WHEN staticinfo->>'ua' ILIKE '%Linux%' THEN 'Linux'
+            ELSE 'Unknown'
+        END AS device,
+
+        COUNT(DISTINCT uuid) AS user_count
+
         FROM userinformation
-        ORDER BY timestamp ASC
+
+        GROUP BY time_bucket, device
+
+        ORDER BY time_bucket ASC
     ");
 
     $chartData = [];
