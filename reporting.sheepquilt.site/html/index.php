@@ -19,7 +19,7 @@
     );
 
     $stmt = $pdo->query("
-        SELECT url, COUNT(*) AS user_count
+        SELECT url, COUNT(DISTINCT uuid) AS user_count
         FROM userinformation 
         GROUP BY url
         ORDER BY user_count DESC
