@@ -74,14 +74,15 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: "Users Currently on Page",
+                        label: "Number of users accessing the page",
                         data: values
                     }]
                 },
                 options: {
+                    indexAxis:"y",
                     responsive: true,
                     scales: {
-                        y: {
+                        x: {
                             beginAtZero: true,
                             ticks: {
                                 precision: 0
