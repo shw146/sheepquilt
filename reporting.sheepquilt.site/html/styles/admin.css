@@ -1,0 +1,236 @@
+/* =========================
+   Admin Page
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background: #f4f6f8;
+    color: #1f2937;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Main heading */
+
+h1 {
+    max-width: 900px;
+    margin: 0 auto 35px;
+    font-size: 2.2rem;
+    color: #111827;
+}
+
+/* Section headings */
+
+h2 {
+    max-width: 900px;
+    margin: 30px auto 15px;
+    font-size: 1.25rem;
+    color: #374151;
+}
+
+/* =========================
+   Forms
+   ========================= */
+
+form {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    padding: 25px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Turn labels into vertical form fields */
+
+form label {
+    display: block;
+    margin-bottom: 18px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Inputs and dropdowns */
+
+input[type="text"],
+input[type="password"],
+input:not([type]),
+select {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 7px;
+    padding: 11px 13px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+
+    background: #fff;
+    color: #111827;
+
+    font-size: 1rem;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+/* Focus state */
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input:not([type]):focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Hidden action inputs */
+
+input[type="hidden"] {
+    display: none;
+}
+
+/* Remove the <br> spacing from the original HTML */
+
+form br {
+    display: none;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+
+button {
+    padding: 11px 18px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* =========================
+   Delete Form
+   ========================= */
+
+#delete-form {
+    border-color: #fecaca;
+}
+
+#delete-form button {
+    background: #dc2626;
+}
+
+#delete-form button:hover {
+    background: #b91c1c;
+}
+
+/* =========================
+   User Table
+   ========================= */
+
+table {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+
+    border-collapse: collapse;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+th,
+td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background: #f9fafb;
+    color: #374151;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+td {
+    color: #4b5563;
+}
+
+/* Alternating rows */
+
+tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+/* Hover effect */
+
+tbody tr:hover {
+    background: #f3f4f6;
+}
+
+/* Remove bottom border from final row */
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================
+   Mobile
+   ========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 12px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    form {
+        padding: 18px;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    th,
+    td {
+        padding: 10px;
+    }
+}

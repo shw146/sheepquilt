@@ -4,6 +4,7 @@
     <meta charset = "utf-8">
     <title>Admin</title>
     <script src = /scripts/delete-confirm.js defer></script>
+    <link rel="stylesheet" href="/styles/admin.css">
 </head>
 
 <body>
@@ -125,7 +126,6 @@
     //Update a user's information
     if($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "update"){
         $username = $_POST["username"];
-        $permission = $_POST["permission"];
         $newvalue = $_POST["newvalue"];
 
         if($_POST["updatevalue"] === "username"){
