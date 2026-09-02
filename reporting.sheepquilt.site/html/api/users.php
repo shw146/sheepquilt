@@ -114,11 +114,11 @@
         $permission = $_POST["permission"];
 
         if($_POST["updatevalue"] === "username"){
-            $stmt = $pdo->query("UPDATE logininfo SET username = $newvalue WHERE username = $username")
+            $stmt = $pdo->query("UPDATE logininfo SET username = $newvalue WHERE username = $username");
         }else if($_POST["updatevalue"] === "password"){
-            $stmt = $pdo->query("UPDATE logininfo SET password = $newvalue WHERE username = $username")
+            $stmt = $pdo->query("UPDATE logininfo SET password = $newvalue WHERE username = $username");
         }else if($_POST["updatevalue"] === "permission"){
-            $stmt = $pdo->query("UPDATE logininfo SET permission = $newvalue WHERE username = $username")
+            $stmt = $pdo->query("UPDATE logininfo SET permission = $newvalue WHERE username = $username");
         }
     }
 
