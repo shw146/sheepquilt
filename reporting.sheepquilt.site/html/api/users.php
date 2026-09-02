@@ -3,7 +3,7 @@
 <head>
     <meta charset = "utf-8">
     <title>Admin</title>
-    <script src = /scripts/delete-confirm.js defer>
+    <script src = /scripts/delete-confirm.js defer></script>
 </head>
 
 <body>
