@@ -136,6 +136,36 @@
         array_keys($analyticsData),
         $analyticsData
     );
+
+    // get information about useragents that reached errors
+    $sql = "
+        SELECT
+            CASE
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Edg/%' THEN 'Edge'
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%OPR/%' THEN 'Opera'
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Firefox/%' THEN 'Firefox'
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Chrome/%' THEN 'Chrome'
+                WHEN staticinfo::jsonb->>'ua' ILIKE '%Safari/%' THEN 'Safari'
+                ELSE 'Other'
+            END AS browser,
+            COUNT(*) AS error_count
+        FROM userinformation
+        WHERE error IS NOT NULL
+        AND error <> ''
+        GROUP BY browser
+        ORDER BY error_count DESC
+    ";
+
+    $result = pg_query($db, $sql);
+
+    $chartData = [];
+
+    while ($row = pg_fetch_assoc($result)) {
+        $chartData[] = [
+            'browser' => $row['browser'],
+            'count' => (int)$row['error_count']
+        ];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -333,6 +363,36 @@
                 }
             );
 
+        </script>
+        <canvas id="errorChart"></canvas>
+        <script>
+            const errorData = <?= json_encode($chartData) ?>;
+
+            const labels = errorData.map(item => item.browser);
+            const values = errorData.map(item => item.count);
+
+            new Chart(document.getElementById('errorChart'), {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Errors',
+                        data: values
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Errors by Browser'
+                        }
+                    }
+                }
+            });
         </script>
     </main>
     <hr>
