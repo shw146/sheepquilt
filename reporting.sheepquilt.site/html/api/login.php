@@ -38,14 +38,7 @@
         $_SESSION['username'] = $username;
         $_SESSION['permission'] = $user['permission'];
 
-        // Check permission level
-        if ($user['permission'] === 'admin') {
-            header("Location: /api/users.php");
-            exit; 
-        } elseif ($user['permission'] === 'user') {
-            header("Location: /api/standard.php");
-            exit; 
-        }
+        header("Location: /api/index.php");
     } else {
         echo "Invalid username or password."; 
     }
