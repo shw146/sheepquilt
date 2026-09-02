@@ -38,7 +38,7 @@
         $_SESSION['username'] = $username;
         $_SESSION['permission'] = $user['permission'];
 
-        header("Location: /api/index.php");
+        header("Location: /index.php");
     } else {
         echo "Invalid username or password."; 
     }
