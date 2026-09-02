@@ -31,7 +31,7 @@
     // Get information about useragents and their timestamps
     $stmt = $pdo->query("
         SELECT timestamp, staticinfo
-        FROM mytable
+        FROM userinformation
         ORDER BY timestamp ASC
     ");
 
