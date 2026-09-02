@@ -231,7 +231,7 @@
             const urlData = <?php echo json_encode($urldata); ?>;
 
             const pageLabels = urlData.map(item => item.url);
-            const values = urlData.map(item => Number(item.user_count));
+            const pageValues = urlData.map(item => Number(item.user_count));
 
             new Chart(document.getElementById("pageChart"), {
                 type: "bar",
@@ -239,7 +239,7 @@
                     labels: pageLabels,
                     datasets: [{
                         label: "Number of users accessing the page",
-                        data: values
+                        data: pageValues
                     }]
                 },
                 options: {
@@ -392,16 +392,16 @@
         <script>
             const errorData = <?= json_encode($chartData) ?>;
 
-            const labels = errorData.map(item => item.browser);
-            const values = errorData.map(item => item.count);
+            const errorLabels = errorData.map(item => item.browser);
+            const errorValues = errorData.map(item => item.count);
 
             new Chart(document.getElementById('errorChart'), {
                 type: 'pie',
                 data: {
-                    labels: labels,
+                    labels: errorLabels,
                     datasets: [{
                         label: 'Errors',
-                        data: values
+                        data: errorValues
                     }]
                 },
                 options: {
