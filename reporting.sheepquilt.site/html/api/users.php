@@ -9,25 +9,20 @@
 
     <h1>Admin</h1>
 
+    <h2>Create a new user</h2>
     <form method="POST" action="/api/users.php">
-
         <!-- Tells PHP what this POST request is for -->
         <input type="hidden" name="action" value="create">
-
         <label>
             Username or email:
             <input type="text" name="username" required>
         </label>
-
         <br>
-
         <label>
             Password:
             <input type="password" name="password" required>
         </label>
-
         <br>
-
         <label>
             Permission Level:
             <select name="permission" required>
@@ -35,11 +30,35 @@
                 <option value="admin">Admin</option>
             </select>
         </label>
-
         <br>
-
         <button type="submit">Create User</button>
+    </form>
 
+    <h2>Update an existing user</h2>
+    <!--Form for updating-->
+    <form method="POST" action="/api/users.php">
+        <!-- Tells PHP what this POST request is for -->
+        <input type="hidden" name="action" value="update">
+        <label>
+            What are you changing? 
+            <select name = "updatevalue">
+                <option value = "username">Username</option>
+                <option value = "password">Password</option>
+                <option value = "permission">Permission type </option>
+            </select>
+        </label>
+        <br>
+        <label>
+            Which user are you updating?
+            <input name="username" required>
+        </label>
+        <br>
+        <label>
+            What is the new value?
+            <input name = "newvalue">
+        </label>
+        <br>
+        <button type="submit">Create User</button>
     </form>
 
 </body>
@@ -76,6 +95,7 @@
         $username = $_POST["username"];
         $password = $_POST["password"];
         $permission = $_POST["permission"];
+        $newvalue = $_POST["newvalue"];
 
         $stmt = $pdo->prepare("INSERT INTO logininfo (username, password, permission)
             VALUES (:username, :password, :permission)
@@ -88,6 +108,19 @@
         ]);
     }
 
+    //Update a user's information
+    if($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "update"){
+        $username = $_POST["username"];
+        $permission = $_POST["permission"];
+
+        if($_POST["updatevalue"] === "username"){
+            $stmt = $pdo->query("UPDATE logininfo SET username = $newvalue WHERE username = $username")
+        }else if($_POST["updatevalue"] === "password"){
+            $stmt = $pdo->query("UPDATE logininfo SET password = $newvalue WHERE username = $username")
+        }else if($_POST["updatevalue"] === "permission"){
+            $stmt = $pdo->query("UPDATE logininfo SET permission = $newvalue WHERE username = $username")
+        }
+    }
 
     //Query for info
     $stmt = $pdo->query("SELECT username, password, permission FROM logininfo");
