@@ -112,6 +112,7 @@
     if($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["action"] === "update"){
         $username = $_POST["username"];
         $permission = $_POST["permission"];
+        $newvalue = $_POST["newvalue"];
 
         if($_POST["updatevalue"] === "username"){
             $stmt = $pdo->query("UPDATE logininfo SET username = $newvalue WHERE username = $username");
