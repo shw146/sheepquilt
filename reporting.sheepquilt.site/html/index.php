@@ -6,6 +6,11 @@
         exit;
     }
 
+    if ($_SESSION['permission'] !== 'admin' || $_SESSION['permission'] !== 'analyst') {
+        http_response_code(403);
+        die("Access denied.");
+    }
+
     // Get information about the urls being served
     $host = "localhost";
     $dbname = "usertracking";
@@ -189,9 +194,7 @@
     </header>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="/members/shawn.html">Shawn</a></li>
-            <li><a href="/CSE135.html">CSE135</a></li>
+            <li><a href="/browser.php">Browser Report</a></li>
             <?php
                 if($_SESSION['permission'] === 'admin'){
                     echo "<li><a href = '/api/users.php'>User Management Page</a></li>";
@@ -200,6 +203,7 @@
         </ul>
     </nav>
     <main>
+        <button onclick="window.print()">Export PDF</button>
         <canvas id="pageChart"></canvas>
         <script>
             const urlData = <?php echo json_encode($urldata); ?>;

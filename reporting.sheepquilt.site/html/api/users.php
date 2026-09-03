@@ -8,8 +8,9 @@
 </head>
 
 <body>
-
     <h1>Admin</h1>
+
+    <a href = "/">Return to Analytics Dashboard</a>
 
     <h2>Create a new user</h2>
     <form method="POST" action="/api/users.php">
