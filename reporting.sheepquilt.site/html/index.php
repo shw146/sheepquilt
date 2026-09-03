@@ -139,7 +139,7 @@
 
 
     // Get information about screen sizes
-    $stmt = $pdo->query('SELECT staticinfo FROM userinformation');
+    $stmt = $pdo->query('SELECT DISTINCT ON (uuid) staticinfo FROM userinformation');
     $users = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     $desktop = 0;
@@ -362,8 +362,11 @@
             );
 
         </script>
-        <canvas id="deviceChart"></canvas>
+        
 
+        <div style="width: auto; max-height: 60svh;">
+            <canvas id="deviceChart"></canvas>
+        </div>
         <script>
             const deviceData = {
                 desktop: <?= $desktop ?>,
