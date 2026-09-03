@@ -307,37 +307,37 @@
 
                 {
                     label: "Chrome",
-                    data: analyticsData.map(row => row.Chrome)
+                    data: stackedData.map(row => row.Chrome)
                 },
 
                 {
                     label: "Safari",
-                    data: analyticsData.map(row => row.Safari)
+                    data: stackedData.map(row => row.Safari)
                 },
 
                 {
                     label: "Firefox",
-                    data: analyticsData.map(row => row.Firefox)
+                    data: stackedData.map(row => row.Firefox)
                 },
 
                 {
                     label: "Edge",
-                    data: analyticsData.map(row => row.Edge)
+                    data: stackedData.map(row => row.Edge)
                 },
 
                 {
                     label: "Opera",
-                    data: analyticsData.map(row => row.Opera)
+                    data: stackedData.map(row => row.Opera)
                 },
 
                 {
                     label: "Bot",
-                    data: analyticsData.map(row => row.Bot)
+                    data: stackedData.map(row => row.Bot)
                 },
 
                 {
                     label: "Other",
-                    data: analyticsData.map(row => row.Other)
+                    data: stackedData.map(row => row.Other)
                 }
 
             ];
