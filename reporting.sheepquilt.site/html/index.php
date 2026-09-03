@@ -137,58 +137,32 @@
         $analyticsData
     );
 
-    // get information about useragents that reached errors
-    $sql = "
-        SELECT
-            CASE
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%bot%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%crawler%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%spider%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%slurp%'
-                    THEN 'Bot'
 
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Edg/%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%Edge/%'
-                    THEN 'Edge'
+    // Get information about screen sizes
+    $stmt = $pdo->query('SELECT staticinfo FROM userinformation');
+    $users = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%OPR/%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%Opera%'
-                    THEN 'Opera'
+    $desktop = 0;
+    $tablet = 0;
+    $phone = 0;
 
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Chrome/%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%CriOS/%'
-                    THEN 'Chrome'
+    foreach ($users as $staticInfo) {
 
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Firefox/%'
-                OR staticinfo::jsonb->>'ua' ILIKE '%FxiOS/%'
-                    THEN 'Firefox'
+        $info = json_decode($staticInfo, true);
 
-                WHEN staticinfo::jsonb->>'ua' ILIKE '%Safari/%'
-                    THEN 'Safari'
+        if (!isset($info['screenWidth'])) {
+            continue;
+        }
 
-                ELSE 'Other'
-            END AS browser,
+        $width = (int)$info['screenWidth'];
 
-            COUNT(*) AS error_count
-
-        FROM userinformation
-
-        WHERE error IS NOT NULL
-        AND error <> ''
-
-        GROUP BY browser
-        ORDER BY error_count DESC
-    ";
-
-    $stmt = $pdo->query($sql);
-
-    $chartData = [];
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $chartData[] = [
-            'browser' => $row['browser'],
-            'count' => (int)$row['error_count']
-        ];
+        if ($width >= 1024) {
+            $desktop++;
+        } elseif ($width >= 768) {
+            $tablet++;
+        } else {
+            $phone++;
+        }
     }
 ?>
 
@@ -388,36 +362,30 @@
             );
 
         </script>
-        <canvas id="errorChart"></canvas>
+        <canvas id="deviceChart"></canvas>
+
         <script>
-            const errorData = <?= json_encode($chartData) ?>;
+            const deviceData = {
+                desktop: <?= $desktop ?>,
+                tablet: <?= $tablet ?>,
+                phone: <?= $phone ?>
+            };
 
-            const errorLabels = errorData.map(item => item.browser);
-            const errorValues = errorData.map(item => item.count);
-
-            new Chart(document.getElementById('errorChart'), {
+            new Chart(document.getElementById('deviceChart'), {
                 type: 'pie',
                 data: {
-                    labels: errorLabels,
+                    labels: ['Desktop', 'Tablet', 'Phone'],
                     datasets: [{
-                        label: 'Errors',
-                        data: errorValues
+                        data: [
+                            deviceData.desktop,
+                            deviceData.tablet,
+                            deviceData.phone
+                        ]
                     }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'right'
-                        },
-                        title: {
-                            display: true,
-                            text: 'Errors by Browser'
-                        }
-                    }
                 }
             });
         </script>
+
     </main>
     <hr>
     <footer>
