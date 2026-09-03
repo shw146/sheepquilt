@@ -195,6 +195,7 @@
     <nav>
         <ul>
             <li><a href="/browser.php">Browser Report</a></li>
+            <li><a href = "/page.php">Page View Report</a></li>
             <?php
                 if($_SESSION['permission'] === 'admin'){
                     echo "<li><a href = '/api/users.php'>User Management Page</a></li>";

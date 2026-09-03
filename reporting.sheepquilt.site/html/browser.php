@@ -155,6 +155,7 @@
     <nav>
         <ul>
             <li><a href="#">Browser Report</a></li>
+            <li><a href = "/page.php">Page View Report</a></li>
             <?php
                 if($_SESSION['permission'] === 'analyst' || $_SESSION['permission'] === 'admin'){
                     echo "<li><a href = '/index.php'>Analytics Dashboard</a></li>";
@@ -166,6 +167,7 @@
         </ul>
     </nav>
     <main>
+        <button onclick="window.print()">Export PDF</button>
         <canvas id="userAgentChart"></canvas>
         <script>
 
