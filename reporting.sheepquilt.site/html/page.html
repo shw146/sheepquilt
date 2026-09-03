@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sheep Quilt</title>
+    <link rel = "stylesheet" href = "/styles/tokens.css"/>
+    <link rel = "stylesheet" href = "/styles/global.css"/>
+    <link rel = "icon" type = "image/x-icon" href = "/assets/favicon.ico"/>
+</head>
+<body>
+    <header>
+        <section>
+            <h1>Sheep Quilt</h1>
+            <p>Reporting version</p>
+        </section>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="/browser.html">Browser Report</a></li>
+            <li><a href = "#">Page View Report</a></li>
+        </ul>
+    </nav>
+    <main>
+        <button onclick="window.print()">Export PDF</button>
+        <img src = "/assets/page-view-report.png">
+        <article>
+            <h1>Design Report</h1>
+            <h2>Why this data?</h2>
+            <p>
+                It's really nice to know exactly what pages my users are going to because it gives a lot of insight into what they might be interested in. If the most visited site is the homepage, then I might want to look into making my other pages more appealing or linking them from the home page a bit more. If they are going to the contact page, either I am getting lots of people who want to talk to me or I might find myself with some bugs on the contact page if I'm not actually getting many people contacting me. This was specifically sorted by unique UUIDs so that I could get rid of all of the irrelevant information and get a good idea of how many actual human users have used my site in total.
+            </p>
+
+            <h2>Why did I choose these visualizations?</h2>
+            <p>
+                The bar chart just seemed like a really good fit. It fits all of the data in a pretty well formed manner and with the small amount of users that I'm getting at the moment, none of the data is being squished into irrelevancy. It displays the data exactly as needed and doesn't need to be flashy.
+            </p>
+            <p>
+                The lollipop chart was added because I found that the bar chart ended up taking up a lot of space because each of the bars would have to take up their own area. It's not a major issue, but it does kind of get in the way of seeing all of the data because the bars end up further away from each other. The lollipop chart fixes that somewhat, so I thought it was worth adding in.
+            </p>
+        </section>
+    </main>
+    <hr>
+    <footer>
+        <p>Made with patches, stitches, and love. Shawn Wang</p>
+    </footer>
+</body>
+
+</html>
