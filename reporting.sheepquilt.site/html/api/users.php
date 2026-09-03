@@ -30,6 +30,7 @@
             <select name="permission" required>
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
+                <option value="analyst">Analyst</option>
             </select>
         </label>
         <br>
