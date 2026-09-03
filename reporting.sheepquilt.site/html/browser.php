@@ -349,7 +349,7 @@
 
 
             new Chart(
-                document.getElementById("userAgentChart"),
+                document.getElementById("stackedBarChart"),
                 {
                     type: "bar",
 
