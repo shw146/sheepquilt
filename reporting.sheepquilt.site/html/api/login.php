@@ -38,7 +38,11 @@
         $_SESSION['username'] = $username;
         $_SESSION['permission'] = $user['permission'];
 
-        header("Location: /index.php");
+        if($user['permission'] == 'admin' || $user['permission'] == 'analyst'){
+            header("Location: /index.php");
+        }else if($user['permission'] == 'user'){
+            header("Location: /browser.php");
+        }
     } else {
         echo "Invalid username or password."; 
     }
