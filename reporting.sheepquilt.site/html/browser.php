@@ -8,7 +8,8 @@
 
     if ($_SESSION['permission'] !== 'admin' && $_SESSION['permission'] !== 'analyst') {
         http_response_code(403);
-        die("Access denied.");
+        include $_SERVER['DOCUMENT_ROOT'] . '/403.html';
+        exit;
     }
     
     // Get information about the urls being served
