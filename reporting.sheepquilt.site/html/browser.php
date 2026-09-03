@@ -308,7 +308,7 @@
             });
 
 
-            const datasets = [
+            const stackeddatasets = [
 
                 {
                     label: "Chrome",
@@ -355,7 +355,7 @@
 
                     data: {
                         labels: stackedLabels,
-                        datasets: datasets
+                        datasets: stackeddatasets
                     },
 
                     options: {
