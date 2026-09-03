@@ -200,6 +200,7 @@
         </ul>
     </nav>
     <main>
+        <button onclick="window.print()">Export PDF</button>
         <canvas id="pageChart"></canvas>
         <script>
             const urlData = <?php echo json_encode($urldata); ?>;
