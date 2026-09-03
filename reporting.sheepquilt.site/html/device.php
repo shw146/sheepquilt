@@ -85,6 +85,12 @@
     </nav>
     <main>
         <button onclick="window.print()">Export PDF</button>
+        <noscript>
+            <p>
+                You'll need to enable javascript to see live analytics. The following is a set of saved reports.
+            </p>
+            <img src = "assets/device-report.png">
+        </noscript>
         <div style="width: auto; max-height: 60svh;">
             <canvas id="deviceChart"></canvas>
         </div>
