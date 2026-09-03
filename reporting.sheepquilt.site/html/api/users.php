@@ -110,7 +110,10 @@
         $username = $_POST["username"];
         $password = $_POST["password"];
         $permission = $_POST["permission"];
-        $newvalue = $_POST["newvalue"];
+
+        if($permission != 'admin' && $permission != 'analyst' && $permission != 'user'){
+            die("That is not a valid permission level");
+        }
 
         $stmt = $pdo->prepare("INSERT INTO logininfo (username, password, permission)
             VALUES (:username, :password, :permission)
@@ -132,8 +135,10 @@
             $stmt = $pdo->prepare("UPDATE logininfo SET username = :newvalue WHERE username = :username");
         }else if($_POST["updatevalue"] === "password"){
             $stmt = $pdo->prepare("UPDATE logininfo SET password = :newvalue WHERE username = :username");
-        }else if($_POST["updatevalue"] === "permission"){
+        }else if($_POST["updatevalue"] === "permission" && ($newvalue == 'admin' || $newvalue == 'analyst' || $newvalue == 'user')){
             $stmt = $pdo->prepare("UPDATE logininfo SET permission = :newvalue WHERE username = :username");
+        }else{
+            die("That is not a valid permission level or something went wrong");
         }
         
         $stmt->execute([
