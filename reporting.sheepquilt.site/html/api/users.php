@@ -91,7 +91,8 @@
 
     if ($_SESSION['permission'] !== 'admin') {
         http_response_code(403);
-        die("Access denied.");
+        include $_SERVER['DOCUMENT_ROOT'] . '/403.html';
+        exit;
     }
 ?>
 
