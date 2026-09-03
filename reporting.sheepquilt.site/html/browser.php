@@ -145,11 +145,6 @@
             <li><a href="#">Home</a></li>
             <li><a href="/members/shawn.html">Shawn</a></li>
             <li><a href="/CSE135.html">CSE135</a></li>
-            <?php
-                if($_SESSION['permission'] === 'admin'){
-                    echo "<li><a href = '/api/users.php'>User Management Page</a></li>";
-                }
-            ?>
         </ul>
     </nav>
     <main>
