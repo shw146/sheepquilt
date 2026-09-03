@@ -289,11 +289,11 @@
         <script>
 
             // PHP inserts the database results directly into JavaScript.
-            const analyticsData =
+            const stackedData =
                 <?= json_encode($analyticsData) ?>;
 
 
-            const analyticsLabels = analyticsData.map(row => {
+            const stackedLabels = analyticsData.map(row => {
 
                 const date = new Date(
                     row.hour.replace(" ", "T")
@@ -354,7 +354,7 @@
                     type: "bar",
 
                     data: {
-                        labels: analyticsLabels,
+                        labels: stackedLabels,
                         datasets: datasets
                     },
 
