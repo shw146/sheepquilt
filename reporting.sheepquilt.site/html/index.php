@@ -6,7 +6,7 @@
         exit;
     }
 
-    if ($_SESSION['permission'] !== 'admin' || $_SESSION['permission'] !== 'analyst') {
+    if ($_SESSION['permission'] !== 'admin' && $_SESSION['permission'] !== 'analyst') {
         http_response_code(403);
         die("Access denied.");
     }
