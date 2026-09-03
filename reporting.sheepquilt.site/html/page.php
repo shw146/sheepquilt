@@ -67,6 +67,12 @@
     </nav>
     <main>
         <button onclick="window.print()">Export PDF</button>
+        <noscript>
+            <p>
+                You'll need to enable javascript to see live analytics. The following is a set of saved reports.
+            </p>
+            <img src = "page-view-report.png">
+        </noscript>
         <canvas id="pageChart"></canvas>
         <script>
             const urlData = <?php echo json_encode($urldata); ?>;
