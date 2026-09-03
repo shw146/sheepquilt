@@ -41,7 +41,7 @@
         if($user['permission'] == 'admin' || $user['permission'] == 'analyst'){
             header("Location: /index.php");
         }else if($user['permission'] == 'user'){
-            header("Location: /browser.php");
+            header("Location: /browser.html");
         }
     } else {
         echo "Invalid username or password."; 
