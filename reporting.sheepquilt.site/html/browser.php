@@ -157,7 +157,7 @@
             <li><a href="#">Browser Report</a></li>
             <?php
                 if($_SESSION['permission'] === 'analyst' || $_SESSION['permission'] === 'admin'){
-                    echo "<li><a href = '/index.php'>Analytics Dashboard</a></li>"
+                    echo "<li><a href = '/index.php'>Analytics Dashboard</a></li>";
                 }
                 if($_SESSION['permission'] === 'admin'){
                     echo "<li><a href = '/api/users.php'>User Management Page</a></li>";
