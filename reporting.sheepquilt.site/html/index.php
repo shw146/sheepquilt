@@ -193,6 +193,8 @@
             <li><a href="/members/shawn.html">Shawn</a></li>
             <li><a href="/CSE135.html">CSE135</a></li>
             <?php
+                session_start(); 
+                
                 if($_SESSION['username'] === 'admin'){
                     echo "<li><a href = '/api/users.php'>User Management Page</a></li>";
                 }
