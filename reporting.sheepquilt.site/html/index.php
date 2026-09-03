@@ -193,10 +193,13 @@
             <li><a href="/members/shawn.html">Shawn</a></li>
             <li><a href="/CSE135.html">CSE135</a></li>
             <?php
-                session_start(); 
-                
-                if($_SESSION['username'] === 'admin'){
-                    echo "<li><a href = '/api/users.php'>User Management Page</a></li>";
+                session_start();
+
+                echo "Session username: ";
+                var_dump($_SESSION['username'] ?? 'NOT SET');
+
+                if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
+                    echo "<li><a href='/api/users.php'>User Management Page</a></li>";
                 }
             ?>
         </ul>
